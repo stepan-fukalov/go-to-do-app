@@ -39,13 +39,13 @@ func loadTheEnv() {
 func createDBInstance() {
 	// DB connection string
 	connectionString := os.Getenv("DB_URI")
-	
+
 	// Database Name
 	dbName := os.Getenv("DB_NAME")
 
 	// Collection name
 	collName := os.Getenv("DB_COLLECTION_NAME")
-	
+
 	// Set client options
 	clientOptions := options.Client().ApplyURI(connectionString)
 
@@ -85,8 +85,8 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	var task models.ToDoList
-	_ = json.NewDecoder(r.Body).Decode(&task)
-	// fmt.Println(task, r.Body)
+	err := json.NewDecoder(r.Body).Decode(&task)
+	fmt.Println("err", err)
 	insertOneTask(task)
 	json.NewEncoder(w).Encode(task)
 }
